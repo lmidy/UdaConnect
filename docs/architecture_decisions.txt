@@ -1,0 +1,8 @@
+Given the requirement to use 3 message passing strategies all 3 strategies were applied starting with Rest, then gRPC then Kafka.
+
+To help with speed of delivery, the UdaConnect monolithic architecture, with three domains of person,
+connection and location were refactored in separate Restful based microservices.
+
+A new location endpoint exposed via gRPC was implemented to pass data to Kafka which will be responsible for persisting data in the database.
+This could help with scale since its likely we would always be receiving location data during a conference. Kafka lends itself nicely to real-time
+streaming, which is great for this use case.

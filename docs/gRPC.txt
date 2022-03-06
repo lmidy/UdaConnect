@@ -1,0 +1,12 @@
+Location Producer has one method Create.
+
+This endpoint allow a client to create new location messages.
+
+To call the create method run:
+
+python modules/location-producer/writer.py
+
+Note given this current architecture design you must have:
+ - the gRPC server running (main.py)
+ - as well as Kafka location topic created
+ - zookeeper should be running

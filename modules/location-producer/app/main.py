@@ -1,9 +1,17 @@
 import time
+import json
 from concurrent import futures
 
 import grpc
+import os
 import location_pb2
 import location_pb2_grpc
+
+from kafka import KafkaProducer
+
+TOPIC_NAME = os.environ["TOPIC_NAME"]
+KAFKA_SERVER = os.environ["KAFKA_SERVER"]
+producer = KafkaProducer(bootstrap_servers=KAFKA_SERVER)
 
 
 class LocationServicer(location_pb2_grpc.LocationServiceServicer):
@@ -15,6 +23,9 @@ class LocationServicer(location_pb2_grpc.LocationServiceServicer):
             "created_at": request.created_at
         }
         print(request_value)
+        kafka_data = json.dumps(request_value).encode()
+        producer.send(TOPIC_NAME, kafka_data)
+        producer.flush()
 
         return location_pb2.LocationMessage(**request_value)
 

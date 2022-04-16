@@ -1,0 +1,54 @@
+kind: Service
+metadata:
+  labels:
+    service: location-producer
+  name: location-producer
+spec:
+  ports:
+    - name: "5004"
+      port: 5004
+      targetPort: 5004
+      nodePort: 30004
+  selector:
+    service: location-producer
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: location-producer
+  name: location-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: location-producer
+  template:
+    metadata:
+      labels:
+        service: location-producer
+    spec:
+      containers:
+        - image: lynettemidy/location-producer:latest
+          name: location-producer
+          imagePullPolicy: Always
+          env:
+            - name: KAFKA_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-env
+                  key: KAFKA_SERVER
+            - name: KAFKA_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-env
+                  key: KAFKA_TOPIC
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+      restartPolicy: Always

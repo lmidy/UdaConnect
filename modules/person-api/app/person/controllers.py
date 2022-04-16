@@ -10,10 +10,8 @@ from typing import Optional, List
 
 DATE_FORMAT = "%Y-%m-%d"
 
-api = Namespace("Person", description="Person API.")  # noqa
+api = Namespace("Person", description="Person API.")
 
-
-# TODO: This needs better exception handling
 
 @api.route("/persons")
 class PersonsResource(Resource):

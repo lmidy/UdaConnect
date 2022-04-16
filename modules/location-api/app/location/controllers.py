@@ -12,10 +12,7 @@ from typing import Optional, List
 
 DATE_FORMAT = "%Y-%m-%d"
 
-api = Namespace("Location", description="Geolocation Service.")  # noqa
-
-
-# TODO: This needs better exception handling
+api = Namespace("Location", description="Geolocation Service.")
 
 
 @api.route("/locations")

@@ -1,3 +1,4 @@
+apiVersion: v1
 kind: Service
 metadata:
   labels:
@@ -8,7 +9,7 @@ spec:
     - name: "5004"
       port: 5004
       targetPort: 5004
-      nodePort: 30004
+      nodePort: 30006
   selector:
     service: location-producer
   type: NodePort
@@ -30,7 +31,7 @@ spec:
         service: location-producer
     spec:
       containers:
-        - image: lynettemidy/location-producer:latest
+        - image: lynettemidy/location-producer:v1.0.0
           name: location-producer
           imagePullPolicy: Always
           env:

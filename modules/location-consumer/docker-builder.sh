@@ -1,4 +1,4 @@
 #!/usr/bin/sh
 
-docker build -t lynettemidy/location-api:v1.0.0 .
-docker push lynettemidy/location-api:v1.0.0
+docker build -t lynettemidy/location-consumer:v1.0.0 .
+docker push lynettemidy/location-consumer:v1.0.0

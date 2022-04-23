@@ -9,7 +9,7 @@ spec:
   - name: "5000"
     port: 5000
     targetPort: 5000
-    nodePort: 30001
+    nodePort: 30004
   selector:
     service: person-api
   type: NodePort
@@ -31,7 +31,7 @@ spec:
         service: person-api
     spec:
       containers:
-      - image: lynettemidy/person-api:latest
+      - image: lynettemidy/person-api:1.0.0
         name: person-api
         imagePullPolicy: Always
         env:

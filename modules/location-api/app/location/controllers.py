@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app.location.models import Connection, Location, Person
+from app.location.models import Location, Person
 from app.location.schemas import (
     LocationSchema
 )

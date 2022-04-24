@@ -31,7 +31,7 @@ spec:
         service: person-api
     spec:
       containers:
-      - image: lynettemidy/person-api:1.0.0
+      - image: lynettemidy/person-api:v1.0.0
         name: person-api
         imagePullPolicy: Always
         env:

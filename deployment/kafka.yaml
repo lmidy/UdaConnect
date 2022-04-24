@@ -39,4 +39,4 @@ spec:
             - containerPort: 9092
           envFrom:
             - configMapRef:
-                name: kafka-configmap
+                name: kafka-config

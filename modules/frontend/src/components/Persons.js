@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Connection from "./Connection";
-import { environment} from "./env";
+//import { environment } from "./env"
 
 class Persons extends Component {
   constructor(props) {
     super(props);
-    this.endpoint_url = "${environment.personapi}/api/persons";
+    this.endpoint_url = "http://localhost:30004/api/persons";
     this.state = {
       persons: [],
       display: null,

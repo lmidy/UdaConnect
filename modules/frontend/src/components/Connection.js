@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { environment } from "./env";
+//import { environment } from "./env";
 
 class Connection extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class Connection extends Component {
   getConnections = (personId) => {
     if (personId) {
       fetch(
-        `${environment.connectionapi}/api/persons/${personId}/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5`
+        `http://localhost:30003/api/persons/${personId}/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5`
       )
         .then((response) => response.json())
         .then((connections) =>

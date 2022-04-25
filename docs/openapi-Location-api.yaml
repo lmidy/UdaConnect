@@ -1,0 +1,74 @@
+openapi: 3.0.1
+info:
+  title: Location API
+  description: Location API Microservice for UdaConnect Project
+  version: 0.1.0
+servers:
+  - url: http://localhost:30002/api
+    description: Location API
+tags:
+  - name: Location
+    description: Geolocation Service.
+paths:
+  /locations:
+    post:
+      summary: Create new location
+      description: Create new location
+      operationId: createLocation
+      requestBody:
+        description: Add a new location to udaconnect
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+      responses:
+        '200':
+          description: created location
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+  /locations/{location_id}:
+    get:
+      operationId: getLocationbyId
+      parameters:
+        - name: location_id
+          in: path
+          description: retrieve a single location
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: single locations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+components:
+  schemas:
+    Location:
+      type: object
+      required:
+        - id
+        - person_id
+        - latitude
+        - longitude
+        - creation_time
+      properties:
+        id:
+          type: integer
+          example: 15
+        person_id:
+          type: integer
+          example: 4
+        latitude:
+          type: string
+          example: '-100.785'
+        longitude:
+          type: string
+          example: '73.558'
+        creation_time:
+          type: string
+          format: date-time
+          example: '2022-04-17T10:30:12'

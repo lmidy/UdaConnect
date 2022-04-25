@@ -1,0 +1,103 @@
+openapi: 3.0.1
+info:
+  title: Connection API
+  description: Connection API Microservice for UdaConnect Project
+  version: 0.1.0
+servers:
+  - url: http://localhost:30003/api
+    description: Connection API
+tags:
+  - name: Connection
+    description: Connection API
+paths:
+  /api/persons/{person_id}/connection:
+    get:
+      operationId: getConnections
+      parameters:
+        - name: distance
+          in: query
+          description: Proximity to a given user in meters
+          schema:
+            type: string
+        - name: end_date
+          in: query
+          description: end date
+          schema:
+            type: string
+        - name: start_date
+          in: query
+          description: start date
+          schema:
+            type: string
+        - name: person_id
+          in: path
+          description: person_id you want to retrieve connections
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: all connections associated to a person
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Connection'
+components:
+  schemas:
+    Connection:
+      required:
+        - location
+        - person
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/Location'
+        person:
+          $ref: '#/components/schemas/Person'
+    Person:
+      required:
+        - first_name
+        - id
+        - company_name
+        - last_name
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: Taco
+        id:
+          type: integer
+          example: 10
+        company_name:
+          type: string
+          example: Taco Bell
+        last_name:
+          type: string
+          example: Loco
+    Location:
+      type: object
+      required:
+        - id
+        - person_id
+        - latitude
+        - longitude
+        - creation_time
+      properties:
+        id:
+          type: integer
+          example: 15
+        person_id:
+          type: integer
+          example: 4
+        latitude:
+          type: string
+          example: '-100.785'
+        longitude:
+          type: string
+          example: '73.558'
+        creation_time:
+          type: string
+          format: date-time
+          example: '2022-04-17T10:30:12'

@@ -1,0 +1,84 @@
+openapi: 3.0.1
+info:
+  title: Person API
+  description: Person API Microservice for UdaConnect Project
+  version: 0.1.0
+servers:
+  - url: http://localhost:30004/api
+    description: Person API
+tags:
+  - name: Person
+    description: Person API
+paths:
+  /persons:
+    get:
+      summary: Retrieve all the persons
+      description: Retrieves all the persons in the database
+      operationId: getPersons
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+    post:
+      summary: Create a person
+      description: Create a person
+      operationId: createPerson
+      requestBody:
+        description: Person to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Person'
+      responses:
+        '200':
+          description: Person created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+  /persons/{person_id}:
+    get:
+      summary: Retrieve a single person
+      description: Retrieve a single person by passing person id
+      operationId: getPerson
+      parameters:
+        - name: person_id
+          in: path
+          description: Unique ID for a given Person
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: person by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+components:
+  schemas:
+    Person:
+      required:
+        - first_name
+        - id
+        - company_name
+        - last_name
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: Taco
+        id:
+          type: integer
+          example: 10
+        company_name:
+          type: string
+          example: Taco Bell
+        last_name:
+          type: string
+          example: Loco

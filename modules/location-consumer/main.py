@@ -1,5 +1,5 @@
 import os
-from app.models import Location
+from app.models import Location # noqa
 from app.services import LocationService
 from kafka import KafkaConsumer
 

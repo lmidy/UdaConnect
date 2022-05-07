@@ -1,12 +1,18 @@
 FROM python:3.8
 
+RUN mkdir /app
+
 WORKDIR /app
 
-COPY . .
+COPY requirements.txt requirements.txt
 
-RUN pip3 install --upgrade pip && \
-        pip3 install -r requirements.txt
+RUN python -m pip install --upgrade pip
+
+RUN pip install -r requirements.txt
+
+
+COPY . /app
 
 EXPOSE 5004
 
-CMD ["python3", "main.py"]
+CMD ["python", "main.py"]

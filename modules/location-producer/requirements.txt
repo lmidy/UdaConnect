@@ -2,3 +2,4 @@ grpcio==1.44.0
 grpcio-tools==1.44.0
 protobuf==3.19.4
 wheel==0.37.1
+kafka-python==2.0.2

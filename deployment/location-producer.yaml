@@ -40,11 +40,11 @@ spec:
                 configMapKeyRef:
                   name: kafka-env
                   key: KAFKA_SERVER
-            - name: KAFKA_TOPIC
+            - name: TOPIC_NAME
               valueFrom:
                 configMapKeyRef:
                   name: kafka-env
-                  key: KAFKA_TOPIC
+                  key: TOPIC_NAME
           resources:
             requests:
               cpu: 100m

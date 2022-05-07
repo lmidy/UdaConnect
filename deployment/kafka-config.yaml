@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: kafka-env
 data:
-  KAFKA_TOPIC: "locations"
+  TOPIC_NAME: "locations"
   KAFKA_SERVER: "udaconnect-kafka:9092"

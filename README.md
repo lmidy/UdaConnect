@@ -79,23 +79,37 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 1. `kubectl apply -f deployment/db-configmap.yaml` - Set up environment variables for the pods
 2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
 3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
-4. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
-5. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
-6. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+4. `kubectl apply -f deployment/kafka-configmap.yaml` - Set up environment variables for kafka
+5. `sh scripts/start_kafka.sh` - Set up a Kafka cluster using helm
+6. `kubectl apply -f deployment/connection-api.yaml` - Set up the service and deployment for the Connection REST API
+7. `kubectl apply -f deployment/location-api.yaml` - Set up the service and deployment for the Location REST API
+8. `kubectl run udaconnect-kafka-client --restart='Never' --image docker.io/bitnami/kafka:2.8.1-debian-10-r0 --namespace default --command -- sleep infinity` - Set up a Kafka client pod
+9. `kubectl exec --tty -i udaconnect-kafka-client --namespace default -- kafka-topics.sh --create --topic locations  --bootstrap-server udaconnect-kafka:9092` - Set up the locations Kafka topic as TOPIC NAME
+10. `kubectl apply -f deployment/location-producer.yaml` - Set up the service and deployment for the Location gRPC producer 
+11. `kubectl apply -f deployment/location-consumer.yaml` - Set up the deployment for the Location consumer 
+12. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
+13. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
 
 Note: The first time you run this project, you will need to seed the database with dummy data. Use the command `sh scripts/run_db_command.sh <POD_NAME>` against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`). Subsequent runs of `kubectl apply` for making changes to deployments or services shouldn't require you to seed the database again!
 
 ### Verifying it Works
-Once the project is up and running, you should be able to see 3 deployments and 3 services in Kubernetes:
-`kubectl get pods` and `kubectl get services` - should both return `udaconnect-app`, `udaconnect-api`, and `postgres`
+Once the project is up and running, you should be able to see services in Kubernetes:
+`kubectl get pods` and `kubectl get services` - should both return what is under docs/screenshots
 
 
 These pages should also load on your web browser:
-* `http://localhost:30001/` - OpenAPI Documentation
+* `http://localhost:30004/` - OpenAPI Person API
+* `http://localhost:30003/` - OpenAPI Connection API
+* `http://localhost:30002/` - OpenAPI Location API 
 * `http://localhost:30001/api/` - Base path for API
-* `http://localhost:30000/` - Frontend ReactJS Application
+* `http://localhost:30000/` - UdaConnect Frontend ReactJS Application (read only)
+
+Download the postman collection:
+* Add a person
+* Add a location
+* Validate you can make a connection by using same date and geolocation data
 
 #### Deployment Note
 You may notice the odd port numbers being served to `localhost`. [By default, Kubernetes services are only exposed to one another in an internal network](https://kubernetes.io/docs/concepts/services-networking/service/). This means that `udaconnect-app` and `udaconnect-api` can talk to one another. For us to connect to the cluster as an "outsider", we need to a way to expose these services to `localhost`.
@@ -140,6 +154,8 @@ This will enable you to connect to the database at `localhost`. You should then 
 To manually connect to the database, you will need software compatible with PostgreSQL.
 * CLI users will find [psql](http://postgresguide.com/utilities/psql.html) to be the industry standard.
 * GUI users will find [pgAdmin](https://www.pgadmin.org/) to be a popular open-source solution.
+Lens is a really neat k8s IDE to navigate k8s if you are not handy with the kubectl commands
+* you can find lens here [lens](https://k8slens.dev/)
 
 ## Architecture Diagrams
 Your architecture diagram should focus on the services and how they talk to one another. For our project, we want the diagram in a `.png` format. Some popular free software and tools to create architecture diagrams:

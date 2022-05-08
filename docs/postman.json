@@ -1,14 +1,14 @@
 {
 	"variables": [],
 	"info": {
-		"name": "UdaConnect_Collection",
+		"name": "postman",
 		"_postman_id": "f21fa14a-b310-3cc9-37d7-921437a37466",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "PersonAPI",
+			"name": "PersonAPI - GetAll",
 			"request": {
 				"url": "http://localhost:30004/api/persons",
 				"method": "GET",
@@ -19,7 +19,38 @@
 			"response": []
 		},
 		{
-			"name": "LocationAPI",
+			"name": "Person API - Post",
+			"request": {
+				"url": "http://localhost:30004/api/persons",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"first_name\": \"Xavier\",\n    \"id\": 56,\n    \"company_name\": \"Marvel\",\n     \"last_name\": \"Wheelchair\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "PersonAPI - Get id 1",
+			"request": {
+				"url": "http://localhost:30004/api/persons/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "LocationAPI - Get id 1",
 			"request": {
 				"url": "http://localhost:30002/api/locations/1",
 				"method": "GET",
@@ -30,7 +61,47 @@
 			"response": []
 		},
 		{
-			"name": "ConnectionAPI",
+			"name": "LocationAPI - Post a single location",
+			"request": {
+				"url": "http://localhost:30002/api/locations",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 5,\n  \"person_id\": 5,\n  \"latitude\": \"-100.785\",\n  \"longitude\": \"73.558\",\n  \"creation_time\": \"2012-04-17T10:30:12\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "LocationAPI - Post a single location copy",
+			"request": {
+				"url": "http://localhost:30002/api/locations",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 5,\n  \"person_id\": 5,\n  \"latitude\": \"-100.785\",\n  \"longitude\": \"73.558\",\n  \"creation_time\": \"2012-04-17T10:30:12\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "ConnectionAPI - Get id of person 5",
 			"request": {
 				"url": {
 					"raw": "http://localhost:30003/api/persons/1/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5",

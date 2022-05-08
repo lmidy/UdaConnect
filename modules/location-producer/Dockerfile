@@ -13,6 +13,8 @@ RUN pip install -r requirements.txt
 
 COPY . /app
 
+RUN python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ location.proto
+
 EXPOSE 5004
 
 CMD ["python", "main.py"]

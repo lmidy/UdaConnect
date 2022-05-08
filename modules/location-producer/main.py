@@ -6,6 +6,7 @@ import grpc
 import os
 import location_pb2
 import location_pb2_grpc
+import logging
 
 from kafka import KafkaProducer
 
@@ -22,7 +23,9 @@ class LocationServicer(location_pb2_grpc.LocationServiceServicer):
             "longitude": request.longitude,
             "created_at": request.created_at
         }
+        logging.info("Received a message")
         print(request_value)
+        logging.info("request_value ==> {}".format(request_value))
         kafka_data = json.dumps(request_value).encode()
         producer.send(TOPIC_NAME, kafka_data)
         producer.flush()
